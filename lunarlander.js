@@ -1,54 +1,49 @@
-background(255, 255, 255);
+function setup() {
+  createCanvas(600, 445);
+  background(255, 255, 255);
+}
+const sentence = "START THE GAME";
+let x = 400;
+let y = 200;
 
-function ufo() {
-  //helmet//
-  strokeWeight(0.8);
-  fill(255, 255, 197);
+function cloud() {
+  fill(137, 207, 240);
+  noStroke();
   beginShape();
-  vertex(240, 180);
-  bezierVertex(240, 180, 260, 182, 310, 180);
-  bezierVertex(310, 165, 299, 150, 283, 141);
-  bezierVertex(288, 142, 246, 143, 236, 180);
-  endShape();
-
-  //small point on the top
-  line(281, 141, 270, 108);
-  fill(23, 38, 90);
-  ellipse(270, 107, 7, 7);
-
-  //main//
-  fill(208, 240, 192);
-  beginShape();
-  vertex(242, 167);
-  bezierVertex(242, 167, 199, 165, 190, 195);
-  bezierVertex(190, 195, 185, 210, 279, 210);
-  bezierVertex(279, 210, 316, 210, 326, 210);
-  bezierVertex(326, 210, 380, 210, 332, 172);
-  bezierVertex(332, 172, 320, 160, 227, 167);
-  endShape();
-
-  //lower part
-
-  fill(208, 240, 192);
-  beginShape();
-  vertex(189, 196);
-  bezierVertex(189, 196, 188, 202, 201, 207);
-  bezierVertex(201, 207, 207, 211, 219, 214);
-  bezierVertex(219, 214, 231, 215, 245, 215);
-  bezierVertex(245, 215, 282, 216, 304, 216);
-  bezierVertex(304, 216, 318, 216, 326, 215);
-  bezierVertex(326, 215, 343, 212, 349, 204);
-  endShape();
-
-  //the lowest part
-  fill(23, 38, 90);
-  beginShape();
-  vertex(230, 214);
-  bezierVertex(230, 216, 241, 224, 267, 227);
-  bezierVertex(267, 227, 283, 227, 299, 216);
+  vertex(170, 160);
+  bezierVertex(x - 230, y - 40, x - 213, y - 77, x - 186, y - 58);
+  bezierVertex(x - 186, y - 58, x - 146, y - 82, x - 117, y - 50);
+  bezierVertex(x - 117, y - 50, x - 80, y - 69, x - 57, y - 50);
+  bezierVertex(x - 57, y - 50, x - 26, y - 66, x - 3, y - 53);
+  bezierVertex(x - 3, y - 43, x + 25, y - 67, x + 62, y - 64);
+  bezierVertex(x + 63, y - 64, x + 79, y - 53, x + 77, y - 29);
+  bezierVertex(x + 77, y - 29, x + 87, y - 13, x + 77, y - 29);
+  bezierVertex(x + 77, y - 29, x + 85, y - 12, x + 58, y + 1);
+  bezierVertex(x + 58, y + 1, x + 6, y + 3, x - 17, y - 10);
+  bezierVertex(x - 17, y - 10, x - 41, y + 5, x - 87, y - 11);
+  bezierVertex(x - 87, y - 11, x - 135, y + 5, x - 161, y - 4);
+  bezierVertex(x - 161, y - 14, x - 205, y - 6, x - 221, y - 23);
+  bezierVertex(x - 221, y - 23, x - 229, y - 32, x - 230, y - 40);
   endShape();
 }
+cloud();
 
+function draw() {
+  background(255, 255, 255);
+  cloud();
+}
+
+function entry() {
+  fill(240, 215, 0);
+  textFont("Helvetica");
+  textSize(25);
+  text(sentence, x - 180, y - 20);
+}
+
+function draw() {
+  background(255, 255, 255);
+  cloud();
+}
 function sky() {
   fill(184, 215, 223);
   beginShape();
@@ -62,36 +57,101 @@ function sky() {
   bezierVertex(490, 343, 520, 160, 750, 491);
   endShape();
 }
-ufo();
-sky();
-/* нажата кнопка
-function mousePressed() {
-  console.log("hi");
-}
-
-function mouseReleased() {
-  console.log("bye");
-}
-
-function mouseClicked() {
-  console.log("ur done");
-}
-*/
-
-/*
-function multiply(a, b) {
-  const result = a * b;
-  return result;
-}
-
-console.log(multiply(8, 9));
-*/
-
-/* літає по горизонталі
-let x = 100;
 function draw() {
-  clear();
-  planet(x + 20, 160, 150, 150);
-  x = x + 1;
+  background(255, 255, 255);
+  sky();
 }
-*/
+function sun() {
+  noStroke();
+  fill(255, 255, 127);
+  ellipse(10, 29, 250, 250);
+}
+function draw() {
+  background(255, 255, 255);
+  entry();
+  sky();
+}
+function planet(x, y, h, w) {
+  noStroke();
+  fill(128, 128, 128);
+  ellipse(x, y, h, w);
+}
+function draw() {
+  background(255, 255, 255);
+  cloud();
+  entry();
+  sky();
+  sun();
+  planet(524, 200, 100, 100);
+}
+function craters(_x, _y, _h, _w) {
+  noStroke();
+  fill(226, 224, 187);
+  ellipse(_x, _y, _h, _w);
+}
+function draw() {
+  sky();
+  craters(548, 51, 10, 10);
+  craters(556, 49, 4, 4);
+  craters(605, 27, 3, 3);
+  craters(607, 29, 1.5, 1.5);
+  planet(140, 278, 100);
+  planet(510, 151, 200, 200);
+  planet(40, 50, 190, 190);
+}
+function ufo(x, y) {
+  translate(x, y);
+  push();
+  strokeWeight(0.1);
+  fill(23, 38, 90);
+  ellipse(270, 271, 40, 20);
+  fill(208, 240, 192);
+  ellipse(270, 268, 100, 15);
+  fill(255, 255, 197);
+  ellipse(270, 268, 80, 9);
+  noFill();
+  strokeWeight(1);
+
+  stroke(23, 38, 90);
+  beginShape();
+  vertex(243, 267);
+  bezierVertex(243, 267, 250, 230, 279, 243);
+  bezierVertex(279, 243, 292, 251, 298, 266);
+
+  endShape();
+  pop();
+}
+function draw() {
+  sky();
+  craters(548, 51, 10, 10);
+  craters(556, 49, 4, 4);
+  craters(605, 27, 3, 3);
+  craters(607, 29, 1.5, 1.5);
+  planet(140, 278, 100);
+  planet(510, 151, 200, 200);
+  planet(40, 50, 190, 190);
+  ufo();
+}
+
+let ufoY = 445;
+
+function draw() {
+  sky();
+  planet(140, 278, 100);
+  planet(510, 151, 200, 200);
+  planet(40, 50, 190, 190);
+  craters(110, 33, 30, 30);
+  craters(112, 59, 12, 12);
+  craters(100, 285, 13, 13);
+  craters(102, 297, 6, 6);
+  craters(561, 109, 20, 20);
+  craters(567, 125, 8, 8);
+  craters(466, 230, 10, 10);
+  ufo(100, ufoY);
+
+  ufoY = ufoY - 2;
+}
+
+let ufoX = 600;
+let velocity = 5;
+let acceleration = 3.2;
