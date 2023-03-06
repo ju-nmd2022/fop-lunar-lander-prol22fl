@@ -1,9 +1,53 @@
+function setup() {
+  createCanvas(600, 600);
+}
 background(255, 255, 255);
-let velocity = 0.2;
 let isGameActive = true;
 let state = "start";
+let velocity = 1;
+let acceleration = 0.02;
+let x = 100;
+let y = 100;
+let ufoX = 100;
+let ufoY = -100;
+
+function ufo(ufoX, ufoY) {
+  push();
+  strokeWeight(0.1);
+  fill(23, 38, 90);
+  ellipse(ufoX + 170, ufoY + 171, 40, 20);
+  fill(208, 240, 192);
+  ellipse(ufoX + 170, ufoY + 168, 100, 15);
+  fill(255, 255, 197);
+  ellipse(ufoX + 170, ufoY + 168, 80, 9);
+  noFill();
+  strokeWeight(1);
+  stroke(23, 38, 90);
+  beginShape();
+  // vertex(ufoX + 243, ufoY + 267);
+  // bezierVertex(
+  //   ufoX + 243,
+  //   ufoY + 267,
+  //   ufoX + 250,
+  //   ufoY + 230,
+  //   ufoX + 279,
+  //   ufoY + 243
+  // );
+  // bezierVertex(
+  //   ufoX + 279,
+  //   ufoY + 243,
+  //   ufoX + 292,
+  //   ufoY + 251,
+  //   ufoX + 298,
+  //   ufoY + 266
+  // );
+
+  endShape();
+  pop();
+}
 
 function startScreen() {
+  background(255, 255, 255);
   function startButton() {
     let x = 400;
     let y = 200;
@@ -30,15 +74,16 @@ function startScreen() {
     //text//
     fill(240, 215, 0);
     textFont("Helvetica");
-    textSize(25);
-    text("Game start", x - 140, y - 20);
+    textSize(23);
+    text("Click here to start the game", x - 210, y - 20);
+    text("THE GOAL IS TO LAND UFO ON THE LEFT PLANET", x - 370, y - 100);
     pop();
   }
   startButton(134, 56);
+}
 
-  function mouseClicked() {
-    console.log("Button was clicked");
-  }
+function mouseClicked() {
+  console.log("Button was clicked");
 }
 
 function gameScreen() {
@@ -57,12 +102,6 @@ function gameScreen() {
     endShape();
   }
 
-  function sun() {
-    noStroke();
-    fill(255, 255, 127);
-    ellipse(-100, 9, 250, 250);
-  }
-
   function craters(_x, _y, _h, _w) {
     noStroke();
     fill(226, 224, 187);
@@ -75,31 +114,8 @@ function gameScreen() {
     ellipse(x, y, h, w);
   }
 
-  function ufo(x, y) {
-    push();
-    translate(x, y);
-    strokeWeight(0.1);
-    fill(23, 38, 90);
-    ellipse(270, 271, 40, 20);
-    fill(208, 240, 192);
-    ellipse(270, 268, 100, 15);
-    fill(255, 255, 197);
-    ellipse(270, 268, 80, 9);
-    noFill();
-    strokeWeight(1);
-
-    stroke(23, 38, 90);
-    beginShape();
-    vertex(243, 267);
-    bezierVertex(243, 267, 250, 230, 279, 243);
-    bezierVertex(279, 243, 292, 251, 298, 266);
-
-    endShape();
-    pop();
-  }
   background(255, 255, 255);
   sky();
-  sun(300, 300);
   planet(140, 278, 100);
   planet(510, 151, 200, 200);
   planet(40, 50, 190, 190);
@@ -110,26 +126,10 @@ function gameScreen() {
   craters(561, 109, 20, 20);
   craters(567, 125, 8, 8);
   craters(466, 230, 10, 10);
-
-  let ufoY = 10;
-  let velocity = 1;
-  let acceleration = 1.2;
-  velocity = velocity + acceleration;
-  ufoY = ufoY + velocity;
-
-  ufo(100, ufoY);
-
-  if (isGameActive) {
-    ufoY = ufoY + velocity;
-    velocity = velocity + acceleration;
-  }
-  if (ufoY < 100) {
-    isGameActive = false;
-  }
 }
 
 function resultScreen() {
-  background(55, 55, 255);
+  background(209, 237, 242);
   restartButton(100, 100, 200, 60);
 }
 
@@ -137,7 +137,7 @@ function restartButton() {
   let x = 400;
   let y = 200;
   push();
-  fill(137, 207, 240);
+  fill(255, 255, 255);
   noStroke();
   beginShape();
   vertex(170, 160);
@@ -158,20 +158,43 @@ function restartButton() {
   fill(240, 215, 0);
   textFont("Helvetica");
   textSize(25);
-  text("try againn", x - 180, y - 20);
+  text("Click to play again ", x - 200, y - 20);
   pop();
 }
 
 function mouseClicked() {
   console.log("Button was clicked");
 }
+state = "start";
 
 function draw() {
   if (state === "start") {
     startScreen();
-  } else if (state === "game") {
+  }
+  if (state === "game") {
     gameScreen();
-  } else if (state === "result") {
+    ufo(ufoX, ufoY);
+    if (isGameActive) {
+      ufoY = ufoY + velocity;
+      velocity = velocity + acceleration;
+      if (ufoY > 180) {
+        isGameActive = false;
+      }
+      if (keyIsDown(38)) {
+        velocity = velocity - 0.1;
+      }
+    }
+  }
+  if (keyIsDown(37)) {
+    ufoX = ufoX - 1;
+  }
+  if (keyIsDown(39)) {
+    ufoX = ufoX + 1;
+  }
+  if (ufoX === -40) {
+    state = "result";
+  }
+  if (state === "result") {
     resultScreen();
   }
 }
@@ -179,6 +202,8 @@ function draw() {
 function mouseClicked() {
   if (state === "start") {
     state = "game";
+    ufoX = 100;
+    ufoY = -100;
   } else if (state === "result") {
     state = "start";
   }
