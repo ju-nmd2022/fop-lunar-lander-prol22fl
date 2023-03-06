@@ -3,8 +3,8 @@ function setup() {
 }
 let isGameActive = true;
 let state = "start";
-let velocity = 1;
-let acceleration = 0.02;
+let velocity = 0.05;
+let acceleration = 0.01;
 let x = 100;
 let y = 100;
 
@@ -14,7 +14,6 @@ let ufoY = -100;
 
 function ufo(ufoX, ufoY) {
   push();
-
   //lower part of the ufo
   strokeWeight(0.1);
   fill(23, 38, 90);
@@ -64,7 +63,7 @@ function startScreen() {
     fill(240, 215, 0);
     textFont("Helvetica");
     textSize(20);
-    text("Click here to start the game", x - 190, y - 20);
+    text("Click to start the game", x - 170, y - 20);
     text("THE GOAL IS TO LAND UFO ON THE LEFT PLANET", x - 300, y - 100);
     pop();
   }
@@ -81,14 +80,14 @@ function gameScreen() {
     noStroke();
     fill(184, 215, 223);
     beginShape();
-    vertex(-1, 443);
-    bezierVertex(1, 443, 21, 357, 83, 362);
+    vertex(-1, 800);
+    bezierVertex(10, 800, -71, 357, 83, 362);
     bezierVertex(123, 314, 179, 317, 200, 360);
     bezierVertex(200, 360, 244, 338, 306, 333);
     bezierVertex(306, 333, 339, 333, 361, 350);
     bezierVertex(361, 350, 379, 337, 411, 325);
     bezierVertex(411, 325, 449, 310, 490, 343);
-    bezierVertex(490, 343, 520, 160, 750, 491);
+    bezierVertex(590, 343, 720, 300, 750, 800);
     endShape();
   }
 
@@ -127,7 +126,7 @@ function restartButton() {
   let x = 400;
   let y = 200;
   push();
-  //cloud
+  //cloud (background of the text)
   fill(255, 255, 255);
   noStroke();
   beginShape();
@@ -149,7 +148,7 @@ function restartButton() {
   fill(240, 215, 0);
   textFont("Helvetica");
   textSize(25);
-  text("Click to play again ", x - 170, y - 20);
+  text("Click to play again ", x - 185, y - 20);
   pop();
 }
 
@@ -197,16 +196,19 @@ function draw() {
 }
 
 //functionality of buttons
-function mouseClicked() {
+function mousePressed() {
   if (state === "start") {
     state = "game";
     ufoX = 100;
     ufoY = -100;
   }
+  //result button for a failed ending
   if (state === "result") {
-    state = "start";
+    state = "game";
+    ufoX = 100;
+    ufoY = -100;
+    acceleration = 0.01;
+    velocity = 0.01;
+    isGameActive = true;
   }
-}
-if (state === "start") {
-  startScreen();
 }
