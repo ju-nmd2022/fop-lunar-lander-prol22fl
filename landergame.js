@@ -20,27 +20,12 @@ function ufo(ufoX, ufoY) {
   ellipse(ufoX + 170, ufoY + 168, 100, 15);
   fill(255, 255, 197);
   ellipse(ufoX + 170, ufoY + 168, 80, 9);
-  noFill();
-  strokeWeight(1);
+  fill(208, 240, 192);
+  strokeWeight(0.2);
   stroke(23, 38, 90);
-  beginShape();
-  // vertex(ufoX + 243, ufoY + 267);
-  // bezierVertex(
-  //   ufoX + 243,
-  //   ufoY + 267,
-  //   ufoX + 250,
-  //   ufoY + 230,
-  //   ufoX + 279,
-  //   ufoY + 243
-  // );
-  // bezierVertex(
-  //   ufoX + 279,
-  //   ufoY + 243,
-  //   ufoX + 292,
-  //   ufoY + 251,
-  //   ufoX + 298,
-  //   ufoY + 266
-  // );
+  ellipse(ufoX + 170, ufoY + 160, 45, 15);
+  //beginShape();
+  //vertex(ufoX + 243, ufoY + 267);
 
   endShape();
   pop();
@@ -141,7 +126,7 @@ function restartButton() {
   noStroke();
   beginShape();
   vertex(170, 160);
-  bezierVertex(x - 430, y - 40, x - 213, y - 77, x - 186, y - 58);
+  bezierVertex(x - 230, y - 40, x - 213, y - 77, x - 186, y - 58);
   bezierVertex(x - 186, y - 58, x - 146, y - 82, x - 117, y - 50);
   bezierVertex(x - 117, y - 50, x - 80, y - 69, x - 57, y - 50);
   bezierVertex(x - 57, y - 50, x - 26, y - 66, x - 3, y - 53);
