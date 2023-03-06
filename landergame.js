@@ -1,32 +1,35 @@
 function setup() {
-  createCanvas(600, 600);
+  createCanvas(800, 800);
 }
-background(255, 255, 255);
 let isGameActive = true;
 let state = "start";
 let velocity = 1;
 let acceleration = 0.02;
 let x = 100;
 let y = 100;
+
+//variables are done with the help of Klara Swiecicka
 let ufoX = 100;
 let ufoY = -100;
 
 function ufo(ufoX, ufoY) {
   push();
+
+  //lower part of the ufo
   strokeWeight(0.1);
   fill(23, 38, 90);
   ellipse(ufoX + 170, ufoY + 171, 40, 20);
+  //wider part of the ufo
   fill(208, 240, 192);
   ellipse(ufoX + 170, ufoY + 168, 100, 15);
+  //middle part of the ufo
   fill(255, 255, 197);
   ellipse(ufoX + 170, ufoY + 168, 80, 9);
+  //upper part of the ufo
   fill(208, 240, 192);
   strokeWeight(0.2);
   stroke(23, 38, 90);
   ellipse(ufoX + 170, ufoY + 160, 45, 15);
-  //beginShape();
-  //vertex(ufoX + 243, ufoY + 267);
-
   endShape();
   pop();
 }
@@ -37,7 +40,7 @@ function startScreen() {
     let x = 400;
     let y = 200;
     push();
-    //cloud//
+    //cloud
     fill(137, 207, 240);
     noStroke();
     beginShape();
@@ -56,7 +59,8 @@ function startScreen() {
     bezierVertex(x - 161, y - 14, x - 205, y - 6, x - 221, y - 23);
     bezierVertex(x - 221, y - 23, x - 229, y - 32, x - 230, y - 40);
     endShape();
-    //text//
+
+    // reference is taken from p5.js
     fill(240, 215, 0);
     textFont("Helvetica");
     textSize(23);
@@ -67,6 +71,7 @@ function startScreen() {
   startButton(134, 56);
 }
 
+//reference is taken from exercise video "create a button"
 function mouseClicked() {
   console.log("Button was clicked");
 }
@@ -122,6 +127,7 @@ function restartButton() {
   let x = 400;
   let y = 200;
   push();
+  //cloud
   fill(255, 255, 255);
   noStroke();
   beginShape();
@@ -151,7 +157,7 @@ function mouseClicked() {
   console.log("Button was clicked");
 }
 state = "start";
-
+//reference from exercise video 11"conditions and conditionals statemnets"
 function draw() {
   if (state === "start") {
     startScreen();
@@ -165,6 +171,7 @@ function draw() {
       if (ufoY > 180) {
         isGameActive = false;
       }
+      //reference is taken from exercise video 12 "keyboard input"
       if (keyIsDown(38)) {
         velocity = velocity - 0.1;
       }
@@ -176,7 +183,7 @@ function draw() {
   if (keyIsDown(39)) {
     ufoX = ufoX + 1;
   }
-  if (ufoX === -40) {
+  if (ufoX === -40 || ufoY > 180) {
     state = "result";
   }
   if (state === "result") {
