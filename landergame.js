@@ -63,9 +63,9 @@ function startScreen() {
     // reference is taken from p5.js
     fill(240, 215, 0);
     textFont("Helvetica");
-    textSize(23);
-    text("Click here to start the game", x - 210, y - 20);
-    text("THE GOAL IS TO LAND UFO ON THE LEFT PLANET", x - 370, y - 100);
+    textSize(20);
+    text("Click here to start the game", x - 190, y - 20);
+    text("THE GOAL IS TO LAND UFO ON THE LEFT PLANET", x - 300, y - 100);
     pop();
   }
   startButton(134, 56);
@@ -149,15 +149,17 @@ function restartButton() {
   fill(240, 215, 0);
   textFont("Helvetica");
   textSize(25);
-  text("Click to play again ", x - 200, y - 20);
+  text("Click to play again ", x - 170, y - 20);
   pop();
 }
 
 function mouseClicked() {
   console.log("Button was clicked");
 }
-state = "start";
+
+//replacement of creens
 //reference from exercise video 11"conditions and conditionals statemnets"
+state = "start";
 function draw() {
   if (state === "start") {
     startScreen();
@@ -165,13 +167,16 @@ function draw() {
   if (state === "game") {
     gameScreen();
     ufo(ufoX, ufoY);
+
     if (isGameActive) {
       ufoY = ufoY + velocity;
       velocity = velocity + acceleration;
+
+      //placement of ufo in the air
+      //reference is taken from exercise video 12 "keyboard input"
       if (ufoY > 180) {
         isGameActive = false;
       }
-      //reference is taken from exercise video 12 "keyboard input"
       if (keyIsDown(38)) {
         velocity = velocity - 0.1;
       }
@@ -191,12 +196,17 @@ function draw() {
   }
 }
 
+//functionality of buttons
 function mouseClicked() {
   if (state === "start") {
     state = "game";
     ufoX = 100;
     ufoY = -100;
-  } else if (state === "result") {
+  }
+  if (state === "result") {
     state = "start";
   }
+}
+if (state === "start") {
+  startScreen();
 }
