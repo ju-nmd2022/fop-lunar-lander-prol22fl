@@ -120,6 +120,10 @@ function gameScreen() {
 function resultScreen() {
   background(209, 237, 242);
   restartButton(100, 100, 200, 60);
+  fill(0, 0, 0);
+  textFont("Helvetica");
+  textSize(20);
+  text("hushgsg");
 }
 
 function restartButton() {
@@ -184,6 +188,7 @@ function draw() {
   if (keyIsDown(37)) {
     ufoX = ufoX - 1;
   }
+  //ne nuzhna//
   if (keyIsDown(39)) {
     ufoX = ufoX + 1;
   }
