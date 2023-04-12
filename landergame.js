@@ -2,8 +2,8 @@ function setup() {
   createCanvas(800, 800);
 }
 let isGameActive = true;
-let state = "start";
-let velocity = 0.05;
+let state = "";
+let velocity = 0.5;
 let acceleration = 0.01;
 let x = 100;
 let y = 100;
@@ -34,7 +34,7 @@ function ufo(ufoX, ufoY) {
 }
 
 function startScreen() {
-  background(255, 255, 255);
+  background(255, 255, 245);
   function startButton() {
     let x = 400;
     let y = 200;
@@ -68,11 +68,6 @@ function startScreen() {
     pop();
   }
   startButton(134, 56);
-}
-
-//reference is taken from exercise video "create a button"
-function mouseClicked() {
-  console.log("Button was clicked");
 }
 
 function gameScreen() {
@@ -117,15 +112,6 @@ function gameScreen() {
   craters(466, 230, 10, 10);
 }
 
-function resultScreen() {
-  background(209, 237, 242);
-  restartButton(100, 100, 200, 60);
-  fill(0, 0, 0);
-  textFont("Helvetica");
-  textSize(20);
-  text("hushgsg");
-}
-
 function restartButton() {
   let x = 400;
   let y = 200;
@@ -156,8 +142,39 @@ function restartButton() {
   pop();
 }
 
+function winScreen() {
+  background(209, 237, 242);
+  restartButton(100, 100, 200, 60);
+  fill(255, 211, 1);
+  textSize(32);
+  stroke(150);
+  text("You won", 243, 111);
+}
+
+function loseScreen() {
+  background(209, 237, 242);
+  restartButton(100, 100, 200, 60);
+  fill(255, 211, 1);
+  textSize(32);
+  stroke(150);
+  text("You lost", 243, 111);
+}
+
 function mouseClicked() {
-  console.log("Button was clicked");
+  if (state === "start") {
+    state = "game";
+  } else if (state === "win" || state === "lose") {
+    state = "game";
+  }
+  if (state === "result") {
+    state = "start";
+    state = "game";
+    ufoX = 100;
+    ufoY = -100;
+    acceleration = 0.01;
+    velocity = 0.01;
+    isGameActive = true;
+  }
 }
 
 //replacement of creens
@@ -167,53 +184,51 @@ function draw() {
   if (state === "start") {
     startScreen();
   }
-  if (state === "game") {
+  if (isGameActive && state === "game") {
     gameScreen();
-    ufo(ufoX, ufoY);
+  } else if (state === "win") {
+    winScreen();
+  } else if (state === "lose") {
+    loseScreen();
+  }
+  if (isGameActive) {
+    ufoY = ufoY + velocity;
+    velocity = velocity + acceleration;
+    if (ufoY > 180) {
+      isGameActive = false;
+      state = "lose";
+    }
+    if (keyIsDown(38)) {
+      velocity = velocity - 0.1;
+    }
 
-    if (isGameActive) {
-      ufoY = ufoY + velocity;
-      velocity = velocity + acceleration;
+    if (state === "start") {
+      startScreen();
+    }
 
-      //placement of ufo in the air
-      //reference is taken from exercise video 12 "keyboard input"
-      if (ufoY > 180) {
-        isGameActive = false;
-      }
-      if (keyIsDown(38)) {
-        velocity = velocity - 0.1;
+    if (state === "game") {
+      gameScreen();
+      ufo(ufoX, ufoY);
+
+      if (isGameActive) {
+        ufoY = ufoY + velocity;
+        velocity = velocity + acceleration;
+
+        //placement of ufo in the air
+        //reference is taken from exercise video 12 "keyboard input"
+
+        if (keyIsDown(38)) {
+          velocity = velocity - 0.1;
+        }
+        if (ufoX === -40 || ufoY > 180) {
+          isGameActive = true;
+          state = "win";
+          winScreen();
+        }
       }
     }
-  }
-  if (keyIsDown(37)) {
-    ufoX = ufoX - 1;
-  }
-  //ne nuzhna//
-  if (keyIsDown(39)) {
-    ufoX = ufoX + 1;
-  }
-  if (ufoX === -40 || ufoY > 180) {
-    state = "result";
-  }
-  if (state === "result") {
-    resultScreen();
-  }
-}
-
-//functionality of buttons
-function mousePressed() {
-  if (state === "start") {
-    state = "game";
-    ufoX = 100;
-    ufoY = -100;
-  }
-  //result button for a failed ending
-  if (state === "result") {
-    state = "game";
-    ufoX = 100;
-    ufoY = -100;
-    acceleration = 0.01;
-    velocity = 0.01;
-    isGameActive = true;
+    if (keyIsDown(37)) {
+      ufoX = ufoX - 1;
+    }
   }
 }
